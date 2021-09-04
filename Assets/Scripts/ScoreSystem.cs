@@ -27,4 +27,9 @@ public class ScoreSystem : MonoBehaviour
         }
 
     }
+
+    public void Startimer()
+    {
+        isCounting = true;
+    }
 }

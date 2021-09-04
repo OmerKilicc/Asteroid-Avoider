@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Scene = UnityEngine.SceneManagement.Scene;
 
 public class GameOverHandler : MonoBehaviour
 {
+    [SerializeField] private GameObject player;
+    [SerializeField] private Button continueButton;
+
     [SerializeField] private TMP_Text gameOverText;
     [SerializeField] private ScoreSystem scoreSystem;
     [SerializeField] private GameObject gameOverDisplay;
@@ -28,10 +32,21 @@ public class GameOverHandler : MonoBehaviour
         SceneManager.LoadScene(scene);
     }
 
-    public void Continue()
+    public void ContinueButton()
     {
-        int scene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(scene+1);
+        
+        AdManager.Instance.ShowAd(this);
+        continueButton.interactable = false;
+    }
+
+    public void ContinueGame()
+    {
+        scoreSystem.Startimer();
+        player.transform.position = Vector3.zero;
+        player.SetActive(true);
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        _asteroidSpawner.enabled = true;
+        gameOverDisplay.gameObject.SetActive(false);
     }
 
     
